@@ -1,0 +1,14 @@
+---
+name: test
+type: pipeline
+steps:
+  - name: "Notify completed uncategorized torrents"
+    commands:
+      - >
+        curl
+          -H "Content-Type: application/json"
+          -d '{"username": "cute anime girl", "content": "{{ torrent.name }} complete"}'
+          https://discord.com/api/webhooks/1026143262668488895/IxsxPMIu-02sFMMUzakPeQwEqKRIJOzct27oOnXB2DrpDBwBAmbjSo9jklN-UsOUn-GH
+    when:
+      - '{{ changes.completion_on not in [None, -1] }}'
+      - '{{ torrent.state == "uploading" }}'
