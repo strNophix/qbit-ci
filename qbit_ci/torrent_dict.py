@@ -10,13 +10,7 @@ class TorrentStateStore:
     def update(self, torrent: TorrentDictionary) -> ChangeMap:
         torrent_name: str = torrent.hash
         old_torrent: typing.Optional[TorrentDictionary] = self._torrents.get(torrent_name)
-        changes: typing.Any
-        if old_torrent:
-            changes = old_torrent.items() ^ torrent.items()
-        else:
-            changes = torrent.items()
-
-        change_map = ChangeMap({k: v for k, v in changes})
+        change_map = ChangeMap.diff_torrents(torrent, old_torrent)
         self._torrents[torrent_name] = torrent
         return change_map
 
