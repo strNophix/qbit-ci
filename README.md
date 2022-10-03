@@ -19,7 +19,12 @@ steps:
 ```
 
 ## Usage
+Python:
 ```py
+# Copy and update settings
+cp .env.sample .env
+nano .env
+
 # Install requirements
 pip install -r requirements.txt
 pip install -e .
@@ -29,4 +34,20 @@ nano .qbit-ci.yaml
 
 # Start the app
 python qbit_ci
+```
+
+Docker:
+```sh
+# Copy and update settings
+cp .env.sample .env
+nano .env
+
+# Create a qbit-ci config file
+nano .qbit-ci.yaml
+
+# Run qbit-ci
+docker run \
+  --env-file .env \
+  --mount type=bind,source=$(pwd)/.qbit-ci.yaml,target=/app/.qbit-ci.yaml \
+  git.cesium.pw/niku/qbit-ci:latest
 ```
